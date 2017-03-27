@@ -17,20 +17,22 @@ namespace Task4
     }
     public class Movie : Video
     {
+        [JsonProperty(Order = 1)]
         public string Title { get; }
-
+        [JsonProperty(Order = 2)]
         private int Watchcount;
+        [JsonProperty(Order = 3)]
         public int Length;
         ///<summary>
         /// Creates a new object
         /// </summary>
         /// <param name="title">Title of the Movie.</param>
-        /// <param name="length">Duration of the Movie</param>
+        /// <param name="length">Length of the Movie</param>
         /// <param name="watchcount">Indicates how often I've watched this Movie</param>
         public Movie(string title, int length, int watchcount)
         {
             if (string.IsNullOrWhiteSpace(title)) throw new ArgumentException("There must be a title.", nameof(title));
-            if (length <= 0) throw new ArgumentException("Duration must be a positive value", nameof(length));
+            if (length <= 0) throw new ArgumentException("Length must be a positive value", nameof(length));
             Title = title;
             Length = length;
             setWatchcount(watchcount);
@@ -52,8 +54,9 @@ namespace Task4
         {
             Watchcount++;
         }
+        
         public string getTitle() => Title;
-        public int getDuration() => Length;
+        public int getLength() => Length;
         public int getWatchcount() => Watchcount;
 
 
@@ -103,27 +106,32 @@ namespace Task4
             m1.justWatched();
             m3.justWatched();
 
-            Console.WriteLine($"Title: {m1.getTitle()} | Length: {m1.getDuration()} | Watched {m1.getWatchcount()} times ");
-            Console.WriteLine($"Title: {m2.getTitle()} | Length: {m2.getDuration()} | Watched {m2.getWatchcount()} times ");
-            Console.WriteLine($"Title: {m3.getTitle()} | Length: {m3.getDuration()} | Watched {m3.getWatchcount()} times ");
+            Console.WriteLine($"Title: {m1.getTitle()} | Length: {m1.getLength()} | Watched {m1.getWatchcount()} times ");
+            Console.WriteLine($"Title: {m2.getTitle()} | Length: {m2.getLength()} | Watched {m2.getWatchcount()} times ");
+            Console.WriteLine($"Title: {m3.getTitle()} | Length: {m3.getLength()} | Watched {m3.getWatchcount()} times ");
 
             Console.WriteLine($"Title: {s1.getTitle()} | Episodes: {s1.getEpisodes()}");
             Console.WriteLine($"Title: {s2.getTitle()} | Episodes: {s2.getEpisodes()}");
 
-            string json = JsonConvert.SerializeObject(video, Formatting.Indented);
-            Console.WriteLine(json);
-            using (StreamWriter file = File.CreateText(@"C:\Users\johan\oom\tasks\Task4\Task4\movie.json"))
-            {
-                JsonSerializer serializer = new JsonSerializer();
-                serializer.Serialize(file, video);
-            }
-           
-            using (StreamReader file = File.OpenText(@"C:\Users\johan\oom\tasks\Task4\Task4\movie.json"))
-            {
-                JsonSerializer serializer = new JsonSerializer();
-                Movie video2 = (Movie)serializer.Deserialize(file, typeof(Movie));
-            }
-            
+             string json = JsonConvert.SerializeObject(video, Formatting.Indented);
+             Console.WriteLine(json);
+             using (StreamWriter file = File.CreateText(@"C:\Users\johan\oom\tasks\Task4\Task4\movie.json"))
+             {
+                 JsonSerializer serializer = new JsonSerializer();
+                 serializer.Serialize(file, video);
+             }
+
+              using (StreamReader file = File.OpenText(@"C:\Users\johan\oom\tasks\Task4\Task4\movie.json"))
+             {
+                 JsonSerializer serializer = new JsonSerializer();
+                 Movie[] video2 = (Movie[])serializer.Deserialize(file, typeof(Movie[]));
+                foreach (var x in video2)
+                {
+                    Console.WriteLine($"Title: {x.getTitle()} | Length: {x.getLength()} | Watched {x.getWatchcount()} times ");
+                }
+        }
+
+  
         }
     }
 }

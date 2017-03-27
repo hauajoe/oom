@@ -24,7 +24,7 @@ namespace Task4
         {
             Movie t1 = new Movie("Testfilm", 999, 9);
             Assert.IsTrue(t1.getTitle() == "Testfilm");
-            Assert.IsTrue(t1.getDuration() == 999);
+            Assert.IsTrue(t1.getLength() == 999);
             Assert.IsTrue(t1.getWatchcount() == 9);
         }
     }
