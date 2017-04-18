@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using NUnit.Framework;
 using Task4;
 
-namespace Task4
+namespace Tests
 {
     [TestFixture]
     class tests
@@ -45,7 +45,7 @@ namespace Task4
         {
             Assert.Catch(() =>
             {
-                Movie t3 = new Task4.Movie("", 999, 9);
+                Movie t3 = new Movie("", 999, 9);
             });
         }
         [Test]
@@ -53,7 +53,7 @@ namespace Task4
         {
             Assert.Catch(() =>
             {
-                Movie t4 = new Task4.Movie("Test", -999, 9);
+                Movie t4 = new Movie("Test", -999, 9);
             });
         }
         [Test]
@@ -61,7 +61,7 @@ namespace Task4
         {
             Assert.Catch(() =>
             {
-                Movie t5 = new Task4.Movie("Test", 999, -9);
+                Movie t5 = new Movie("Test", 999, -9);
             });
         }
     }
